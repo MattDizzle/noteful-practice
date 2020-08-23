@@ -1,36 +1,39 @@
 {
-  "name": "mattr-boilerplate",
+  "name": "noteful-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "dev": "nodemon src/server.js",
+    "test": "mocha --require test/setup.js",
     "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "migrate": "postgrator --config postgrator-config.js",
+    "migrate:test": "env NODE_ENV=test npm run migrate",
+    "migrate:production": "heroku run npm run migrate",
     "predeploy": "npm audit",
-    "deploy": "git push heroku master"
+    "deploy": "git push heroku master",
+    "postdeploy": "npm run migrate:production"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thinkful-ei-panda/mattr-boilerplate.git"
+  "engines": {
+    "node": "v13.12.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/thinkful-ei-panda/mattr-boilerplate/issues"
-  },
-  "homepage": "https://github.com/thinkful-ei-panda/mattr-boilerplate#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.23.3",
-    "morgan": "^1.10.0"
+    "knex": "^0.21.2",
+    "morgan": "^1.10.0",
+    "pg": "^7.12.0",
+    "postgrator-cli": "^3.2.0",
+    "xss": "^1.0.7"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^8.1.1",
+    "mocha": "^8.0.1",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2"
   }
